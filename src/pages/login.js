@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import withStyles from "@material-ui/core/styles/withStyles";
 import AppIcon from "../images/icon.png";
-import axios from "axios";
 import { Link } from "react-router-dom";
 
 // MUI stuff
@@ -47,7 +46,13 @@ const init = {
   errors: {}
 };
 
-const Login = ({ classes, history, loginUser, user, UI: { loading } }) => {
+const Login = ({
+  classes,
+  history,
+  loginUser,
+  user,
+  UI: { loading, errors }
+}) => {
   const [formState, setFormState] = useState(init);
   const handleSubmit = e => {
     e.preventDefault();
@@ -60,6 +65,11 @@ const Login = ({ classes, history, loginUser, user, UI: { loading } }) => {
   const handleChange = e => {
     setFormState({ ...formState, [e.target.name]: e.target.value });
   };
+  useEffect(() => {
+    if (errors) {
+      setFormState({ ...formState, errors: errors });
+    }
+  }, [errors, formState]);
   return (
     <Grid container className={classes.form}>
       <Grid item sm />

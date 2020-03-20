@@ -8,5 +8,11 @@ export const LOADING_USER = "LOADING_USER";
 export const SET_ERRORS = "SET_ERRORS";
 export const LOADING_UI = "LOADING_UI";
 export const CLEAR_ERRORS = "CLEAR_ERRORS";
+export const LOADING_DATA = "LOADING_DATA";
 
 //Data
+export const SET_MENTIONS = "SET_MENTIONS";
+export const SET_MENTION = "SET_MENTION";
+export const LIKE_MENTION = "LIKE_MENTION";
+export const UNLIKE_MENTION = "UNLIKE_MENTION";
+export const DELETE_MENTION = "DELETE_MENTION";
