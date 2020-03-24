@@ -15,9 +15,10 @@ import KeyboardReturn from "@material-ui/icons/KeyboardReturn";
 import CalendarToday from "@material-ui/icons/CalendarToday";
 import Paper from "@material-ui/core/Paper";
 
-import { logoutUser, uploadImage } from "../redux/actions/userActions";
+import { logoutUser, uploadImage } from "../../redux/actions/userActions";
 import EditDetails from "./EditDetails";
-import MyButton from "../util/MyButton";
+import MyButton from "../../util/MyButton";
+import ProfileSkeleton from "../../util/ProfileSkeleton";
 
 const styles = theme => ({
   ...theme.spreadThis
@@ -147,7 +148,7 @@ const Profile = ({
       </Paper>
     )
   ) : (
-    <p>loading...</p>
+    <ProfileSkeleton />
   );
   return profileMarkup;
 };

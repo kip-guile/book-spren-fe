@@ -2,9 +2,10 @@ import React, { useEffect } from "react";
 import Grid from "@material-ui/core/Grid";
 import { connect } from "react-redux";
 
-import Mention from "../components/Mention";
-import Profile from "../components/Profile";
+import Mention from "../components/mention/Mention";
+import Profile from "../components/profile/Profile";
 import { getMentions } from "../redux/actions/dataActions";
+import MentionSkeleton from "../util/MentionSkeleton";
 
 const Home = ({ getMentions, data }) => {
   const { mentions, loading } = data;
@@ -17,7 +18,7 @@ const Home = ({ getMentions, data }) => {
       <Mention key={mention.mentionId} mention={mention} />
     ))
   ) : (
-    <p>Loading...</p>
+    <MentionSkeleton />
   );
   return (
     <div>

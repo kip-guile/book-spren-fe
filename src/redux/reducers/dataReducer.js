@@ -3,7 +3,10 @@ import {
   LIKE_MENTION,
   UNLIKE_MENTION,
   LOADING_DATA,
-  DELETE_MENTION
+  DELETE_MENTION,
+  POST_MENTION,
+  SET_MENTION,
+  SUBMIT_COMMENT
 } from "../types";
 
 const initialState = {
@@ -25,12 +28,20 @@ export default function(state = initialState, action) {
         mentions: action.payload,
         loading: false
       };
+    case SET_MENTION:
+      return {
+        ...state,
+        mention: action.payload
+      };
     case LIKE_MENTION:
     case UNLIKE_MENTION:
       let index = state.mentions.findIndex(
         mention => mention.mentionId === action.payload.mentionId
       );
       state.mentions[index] = action.payload;
+      if (state.mention.mentionId === action.payload.mentionId) {
+        state.mention = action.payload;
+      }
       return {
         ...state
       };
@@ -38,9 +49,22 @@ export default function(state = initialState, action) {
       index = state.mentions.findIndex(
         mention => mention.mentionId === action.payload
       );
-      state.screams.splice(index, 1);
+      state.mentions.splice(index, 1);
       return {
         ...state
+      };
+    case POST_MENTION:
+      return {
+        ...state,
+        mentions: [action.payload, ...state.mentions]
+      };
+    case SUBMIT_COMMENT:
+      return {
+        ...state,
+        mention: {
+          ...state.mention,
+          comments: [action.payload, ...state.mention.comments]
+        }
       };
     default:
       return state;

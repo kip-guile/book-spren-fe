@@ -13,14 +13,18 @@ import { SET_AUTHENTICATED } from "./redux/types";
 import { logoutUser, getUserData } from "./redux/actions/userActions";
 
 // Components
-import Navbar from "./components/Navbar";
+import Navbar from "./components/layout/Navbar";
 import AuthRoute from "./util/AuthRoute";
 
 // Pages
 import Home from "./pages/home";
 import Login from "./pages/login";
 import Signup from "./pages/signup";
+import User from "./pages/user";
 import axios from "axios";
+
+axios.defaults.baseURL =
+  "https://europe-west1-book-spren.cloudfunctions.net/api";
 
 const theme = createMuiTheme(themeFile);
 
@@ -48,6 +52,12 @@ function App() {
               <Route exact path="/" component={Home} />
               <AuthRoute exact path="/login" component={Login} />
               <AuthRoute exact path="/signup" component={Signup} />
+              <Route exact path="/users/:username" component={User} />
+              <Route
+                exact
+                path="/users/:username/mention/:mentionId"
+                component={User}
+              />
             </Switch>
           </div>
         </Router>

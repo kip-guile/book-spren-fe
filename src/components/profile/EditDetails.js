@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { editUserDetails } from "../redux/actions/userActions";
+import { editUserDetails } from "../../redux/actions/userActions";
 import withStyles from "@material-ui/core/styles/withStyles";
 
 // Material UI stuff
@@ -13,7 +13,7 @@ import {
   DialogTitle
 } from "@material-ui/core";
 import EditIcon from "@material-ui/icons/Edit";
-import MyButton from "../util/MyButton";
+import MyButton from "../../util/MyButton";
 
 const init = {
   bio: "",
@@ -47,7 +47,6 @@ const EditDetails = ({ editUserDetails, classes, credentials }) => {
       ...profileState,
       open: true
     });
-    console.log(profileState);
     // mapUserDetailsToState(credentials);
   };
   const handleClose = () => {

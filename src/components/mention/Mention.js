@@ -10,13 +10,12 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import ChatIcon from "@material-ui/icons/Chat";
-import FavoriteIcon from "@material-ui/icons/Favorite";
-import FavoriteBorder from "@material-ui/icons/FavoriteBorder";
 
 import { connect } from "react-redux";
-import { likeMention, unlikeMention } from "../redux/actions/dataActions";
-import MyButton from "../util/MyButton";
+import MyButton from "../../util/MyButton";
 import DeleteMention from "./DeleteMention";
+import MentionDialog from "./MentionDialog";
+import LikeButton from "./LikeButton";
 
 const styles = {
   card: {
@@ -44,38 +43,11 @@ const Mention = ({
     likeCount,
     commentCount
   },
-  likeMention,
-  unlikeMention,
-  user
+  user,
+  openDialog
 }) => {
-  console.log(user, username);
   dayjs.extend(relativeTime);
-  const likedMention = () => {
-    if (user.likes && user.likes.find(like => like.mentionId === mentionId))
-      return true;
-    else return false;
-  };
-  const likeMentionfxn = () => {
-    likeMention(mentionId);
-  };
-  const unlikeMentionfxn = () => {
-    unlikeMention(mentionId);
-  };
-  const likeButton = !user.authenticated ? (
-    <MyButton tip="like">
-      <Link to="/login">
-        <FavoriteBorder color="primary" />
-      </Link>
-    </MyButton>
-  ) : likedMention() ? (
-    <MyButton tip="Undo like" onClick={unlikeMentionfxn}>
-      <FavoriteIcon color="primary" />
-    </MyButton>
-  ) : (
-    <MyButton tip="Like" onClick={likeMentionfxn}>
-      <FavoriteBorder color="primary" />
-    </MyButton>
-  );
+
   const deleteButton =
     user.authenticated && username === user.credentials.username ? (
       <DeleteMention mentionId={mentionId} />
@@ -101,12 +73,17 @@ const Mention = ({
           {dayjs(time).fromNow()}
         </Typography>
         <Typography variant="body1">{body}</Typography>
-        {likeButton}
+        <LikeButton mentionId={mentionId} />
         <span>{likeCount} Likes</span>
         <MyButton tip="comments">
           <ChatIcon color="primary" />
         </MyButton>
         <span>{commentCount} comments</span>
+        <MentionDialog
+          mentionId={mentionId}
+          username={username}
+          openDialog={openDialog}
+        />
       </CardContent>
     </Card>
   );
@@ -116,12 +93,4 @@ const mapStateToProps = state => ({
   user: state.user
 });
 
-const mapActionsToProps = {
-  likeMention,
-  unlikeMention
-};
-
-export default connect(
-  mapStateToProps,
-  mapActionsToProps
-)(withStyles(styles)(Mention));
+export default connect(mapStateToProps)(withStyles(styles)(Mention));
